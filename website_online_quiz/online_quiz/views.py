@@ -3,7 +3,8 @@ from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
-from django.views.generic import CreateView
+from django.views.generic import DetailView, CreateView, ListView
+# from rest_framework import *
 
 from website_online_quiz.online_quiz.mixins import UserIsOwnerMixin
 from website_online_quiz.online_quiz.models import *
@@ -26,11 +27,13 @@ class RegisterView(CreateView): # создать аккаунт
         login = self.request.user
         return redirect(reverse_lazy('tasks:login'))
 
+class QuizListView(ListView):
+    template_name = 'templates/quiz_list.html'
 
-class QuizView(CreateView): # вьюшка для просмотра квиза
-    template_name = 'templates/base.html'
+class QuizView(DetailView): # вьюшка для просмотра квиза
+    template_name = 'templates/view_quiz.html'
 
-class SubmitQuestionView(UserIsOwnerMixin, LoginRequiredMixin, CreateView): # вьюшка для изменения квиза
+class SubmitQuestionView(UserIsOwnerMixin, LoginRequiredMixin, CreateView): # вьюшка для добавления вопроса
     template_name = 'templates/submit_question.html'
     success_url = reverse_lazy('templates:base')
 

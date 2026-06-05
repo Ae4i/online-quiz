@@ -1,19 +1,19 @@
 from django.db import models
 
 # Create your models here.
-class Quiz(models.Model):
-    title = models.CharField(max_length=100)
+class Quiz(models.Model): # модель квиза
+    title = models.CharField(max_length=100) # название квиза
 
-class Question(models.Model):
-    question = models.TextField()
-    quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)
+class Question(models.Model): # модель вопроса
+    question = models.TextField() # текст вопроса
+    quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE) # связано к квизу много-к-одному
 
-class Answer(models.Model):
-    answer = models.TextField()
-    is_correct = models.BooleanField(default=False)
-    question = models.ForeignKey(Question, on_delete=models.CASCADE)
-
-class QuestionSubmission(models.Model): # for submitting questions to a quiz
+class Answer(models.Model): # модель ответа
+    answer = models.TextField() # текст ответа
+    is_correct = models.BooleanField(default=False) # правильный ли ответ
+    question = models.ForeignKey(Question, on_delete=models.CASCADE) # связано к вопросу много-к-одному
+"""
+class QuestionSubmission(models.Model): # добавление вопросов к квизу
     title = models.CharField(max_length=100)
     quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)
 
@@ -25,7 +25,7 @@ class QuestionSubmission(models.Model): # for submitting questions to a quiz
         self.quiz.questions[len(self.quiz.questions)-1].add(answers)
         self.save()
 
-class QuizSubmission(models.Model): # for submitting questions to a quiz
+class QuizSubmission(models.Model): # добавление квизов
     title = models.CharField(max_length=100)
     quiz = Quiz()
 
@@ -35,4 +35,4 @@ class QuizSubmission(models.Model): # for submitting questions to a quiz
     def add_question(self, question, answers):
         self.quiz.questions.add(question)
         self.quiz.questions[len(self.quiz.questions)-1].add(answers)
-        self.save()
+        self.save()"""
