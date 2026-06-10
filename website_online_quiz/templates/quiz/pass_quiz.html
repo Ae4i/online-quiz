@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2 class="mb-3 text-primary">Проходження: {{ quiz.title }}</h2>
+    <p class="text-muted">Оберіть правильні варіанти відповідей</p>
+    <hr>
+
+    <form method="post" action="#">
+        {% csrf_token %}
+        {% for question in quiz.question_set.all %}
+            <div class="card mb-3 border-primary">
+                <div class="card-header bg-light">
+                    <strong>{{ forloop.counter }}. {{ question.question }}</strong>
+                </div>
+                <div class="card-body">
+                    {% for answer in question.answer_set.all %}
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="radio" name="question_{{ question.id }}" id="answer_{{ answer.id }}" value="{{ answer.id }}">
+                            <label class="form-check-input-label" for="answer_{{ answer.id }}">
+                                {{ answer.answer }}
+                            </label>
+                        </div>
+                    {% empty %}
+                        <p class="text-muted">Для цього питання немає варіантів відповідей.</p>
+                    {% endfor %}
+                </div>
+            </div>
+        {% empty %}
+            <div class="alert alert-warning">У цьому квізі немає питань.</div>
+        {% endfor %}
+
+        <button type="submit" class="btn btn-primary mt-3">Завершити тест</button>
+        <a href="{% url 'online_quiz:quiz_list' %}" class="btn btn-outline-secondary mt-3 ms-2">На головну</a>
+    </form>
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2 class="mb-3 text-primary">{{ quiz.title }}</h2>
+    <hr>
+
+    <!-- Перебираємо всі питання, які пов'язані з цим квізом -->
+    {% for question in quiz.question_set.all %}
+        <div class="card mb-3 border-secondary">
+            <div class="card-header bg-secondary text-white">
+                <strong>Питання:</strong> {{ question.question }}
+            </div>
+            <ul class="list-group list-group-flush">
+                <!-- Перебираємо відповіді до кожного питання -->
+                {% for answer in question.answer_set.all %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        {{ answer.answer }}
+                        {% if answer.is_correct %}
+                            <span class="badge bg-success rounded-pill">Правильна</span>
+                        {% endif %}
+                    </li>
+                {% empty %}
+                    <li class="list-group-item text-muted">Відповідей ще немає.</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% empty %}
+        <div class="alert alert-warning">
+            У цьому квізі ще немає питань.
+        </div>
+    {% endfor %}
+
+    <div class="mt-4">
+        <a href="{% url 'online_quiz:quiz_list' %}" class="btn btn-outline-primary">Повернутися до списку</a>
+    </div>
+{% endblock %}

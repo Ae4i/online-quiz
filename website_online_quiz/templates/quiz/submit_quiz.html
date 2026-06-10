@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2 class="mb-4">Створити новий квіз</h2>
+    
+    <form method="post" class="mt-3">
+        {% csrf_token %}
+        <!-- form.as_p автоматично виведе поля форми у тегах <p> -->
+        {{ form.as_p }}
+        
+        <button type="submit" class="btn btn-success mt-2">Зберегти квіз</button>
+        <a href="{% url 'online_quiz:quiz_list' %}" class="btn btn-secondary mt-2 ms-2">Скасувати</a>
+    </form>
+{% endblock %}

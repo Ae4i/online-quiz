@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="text-center p-5">
+        <h2 class="text-success mb-3">Тест завершено!</h2>
+        <p class="fs-4">Ви відповіли правильно на <strong>{{ score }}</strong> з <strong>{{ total }}</strong> питань.</p>
+        <div class="mt-4">
+            <a href="{% url 'online_quiz:quiz_list' %}" class="btn btn-primary">До списку квізів</a>
+        </div>
+    </div>
+{% endblock %}

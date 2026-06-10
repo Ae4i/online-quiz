@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2 class="mb-4">Мій профіль: {{ user.username }}</h2>
+    <h4 class="mb-3">Створені мною квізи:</h4>
+
+    <div class="list-group">
+        {% for quiz in user_quizzes %}
+            <div class="list-group-item d-flex justify-content-between align-items-center">
+                <div>
+                    <h5 class="mb-1">{{ quiz.title }}</h5>
+                    <small class="text-muted">Кількість питань: {{ quiz.question_set.count }}</small>
+                </div>
+                <a href="{% url 'online_quiz:quiz_detail' quiz.pk %}" class="btn btn-sm btn-outline-success">
+                    Редагувати / Переглянути відповіді
+                </a>
+            </div>
+        {% empty %}
+            <div class="alert alert-info">
+                Ви ще не створили жодного квізу. <a href="{% url 'online_quiz:add_quiz' %}">Створити зараз</a>.
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
